@@ -1,13 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App';
-import './index.css'; // optional, can be empty
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { HashRouter as Router } from "react-router-dom";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <BrowserRouter>
+const container = document.getElementById("root");
+if (container) {
+  const root = ReactDOM.createRoot(container);
+  root.render(
+    <Router>
       <App />
-    </BrowserRouter>
-  </React.StrictMode>
-);
+    </Router>
+  );
+}
