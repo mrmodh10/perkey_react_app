@@ -1,19 +1,25 @@
-import axios from 'axios';
-import type { SupabaseAuthResponse } from '../types';
+// lib/supaClient.ts
+export async function exchangeCodeForSession(code: string) {
+  const STATIC_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3c2Npd25zbHdrc3V2cmZ6cGNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxMDA4NzEsImV4cCI6MjA3MDY3Njg3MX0.nPyhD2_VyQt2YTesO77S-55QBAAcKfdoQLXobuPpozs";
 
-const SUPABASE_FUNCTION_URL = import.meta.env.VITE_SUPABASE_FUNCTION_URL as string;
+  try {
+    const res = await fetch("https://lwsciwnslwksuvrfzpca.supabase.co/functions/v1/instagram-login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${STATIC_ACCESS_TOKEN}`, // static token
+      },
+      body: JSON.stringify({ code }),
+    });
 
-if (!SUPABASE_FUNCTION_URL) {
-  // Fail fast in dev if not configured
-  // eslint-disable-next-line no-console
-  console.warn('VITE_SUPABASE_FUNCTION_URL is not set');
-}
+    if (!res.ok) {
+      const errorData = await res.json();
+      return { ok: false, message: errorData.error || "Request failed" };
+    }
 
-export async function exchangeCodeForSession(code: string): Promise<SupabaseAuthResponse> {
-  const res = await axios.post<SupabaseAuthResponse>(
-    SUPABASE_FUNCTION_URL,
-    { code },
-    { headers: { 'Content-Type': 'application/json' } }
-  );
-  return res.data;
+    const data = await res.json();
+    return { ok: true, ...data };
+  } catch (err: unknown) {
+    return { ok: false, message: (err as Error).message };
+  }
 }
