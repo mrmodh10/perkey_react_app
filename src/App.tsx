@@ -1,12 +1,14 @@
 import { Routes, Route } from "react-router-dom";
 import InstagramLogin from "./pages/InstagramLogin";
 import VerifiedScreen from "./components/VerifiedScreen";
+import HomeScreen from "./pages/HomeScreen";
 
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<InstagramLogin />} />
-      <Route path="/instagramLogin" element={<VerifiedScreen />} />
+      <Route path="/" element={<HomeScreen />} />
+      <Route path="/instagramLogin" element={<InstagramLogin />} />
+      <Route path="/verified" element={<VerifiedScreen />} />
     </Routes>
   );
 }
