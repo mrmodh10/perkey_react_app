@@ -1,17 +1,15 @@
 {
   "name": "instagram-auth-app",
-  "homepage": "https://amazing-griffin-5d41ac.netlify.app",
+  "homepage": "https://689d4d041842cd00080e142e--amazing-griffin-5d41ac.netlify.app",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d dist",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+  "dev": "vite",
+  "build": "tsc -b && vite build",
+  "preview": "vite preview",
+  "lint": "eslint ."
+},
   "dependencies": {
     "axios": "^1.11.0",
     "framer-motion": "^12.23.12",
