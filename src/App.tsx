@@ -1,6 +1,6 @@
-import { Routes, Route } from 'react-router-dom';
-import InstagramLogin from './pages/InstagramLogin';
-import VerifiedScreen from './components/VerifiedScreen';
+import { Routes, Route } from "react-router-dom";
+import InstagramLogin from "./pages/InstagramLogin";
+import VerifiedScreen from "./components/VerifiedScreen";
 
 export default function App() {
   return (
