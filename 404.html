@@ -2,10 +2,11 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <title>Redirecting...</title>
     <script type="text/javascript">
-      // Redirect to the root with the path preserved
-      var redirectTo = window.location.pathname.replace("/perkey_react_app", "");
-      window.location.replace("/perkey_react_app" + redirectTo);
+      // redirect all unknown routes to index.html so React Router can handle them
+      const path = window.location.pathname.replace(/^\/perkey_react_app/, "");
+      window.location.replace("/perkey_react_app/index.html" + path + window.location.search);
     </script>
   </head>
   <body></body>
