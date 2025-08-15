@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTheme } from "styled-components";
 
 export default function VerifiedScreen() {
   const [countdown, setCountdown] = useState(5);
   const navigate = useNavigate();
+  const theme = useTheme();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -25,13 +27,13 @@ export default function VerifiedScreen() {
   }, [countdown, navigate]);
 
   return (
-    <div
+    <div 
       style={{
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045)",
+        background: theme.background,
         padding: "1rem",
       }}
     >

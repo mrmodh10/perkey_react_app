@@ -1,36 +1,61 @@
-import { motion, type Variants } from "framer-motion";
-
-const spinnerVariants: Variants = {
-  animate: {
-    rotate: 360,
-    transition: { repeat: Infinity, duration: 1, ease: "linear" },
-  },
-};
+import { motion } from "framer-motion";
+import { useTheme } from "styled-components";
 
 export default function LoadingScreen() {
+  const theme = useTheme();
+
   return (
     <div
       style={{
         minHeight: "100vh",
-        display: "grid",
-        placeItems: "center",
-        background: "linear-gradient(135deg,#a855f7,#ec4899,#ef4444)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        background: theme.background,
+        padding: "1rem",
       }}
     >
       <motion.div
-        variants={spinnerVariants}
-        animate="animate"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         style={{
-          width: 64,
-          height: 64,
-          borderRadius: "50%",
-          border: "4px solid rgba(255,255,255,0.9)",
-          borderTopColor: "transparent",
-          // boxShadow: "0 0 24px rgba(0,0,0,0.15)",
+          background:  "rgba(255,255,255,0.1)",
+          padding: "2rem 3rem",
+          borderRadius: "1rem",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.1rem",
+          minWidth: "280px",
         }}
-        aria-label="Loading"
-        role="status"
-      />
+      >
+        {/* Animated Bouncing Dots */}
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          {[0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              animate={{ y: ["0%", "-50%", "0%"] }}
+              transition={{
+                repeat: Infinity,
+                duration: 0.6,
+                delay: i * 0.5,
+              }}
+              style={{
+                width: "12px",
+                height: "12px",
+                borderRadius: "50%",
+                backgroundColor: theme.textColor,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Loading Text */}
+        <p style={{color: theme.textColor }}>Authenticating...</p>
+
+      </motion.div>
     </div>
   );
 }

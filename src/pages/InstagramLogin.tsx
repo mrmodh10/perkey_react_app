@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingScreen from "../components/LoadingScreen";
 import { exchangeCodeForSession } from "../lib/supaClient";
+import { useTheme } from "styled-components";
 
 type Status =
   | { state: "idle" }
@@ -10,6 +11,7 @@ type Status =
   | { state: "done" };
 
 export default function InstagramLogin() {
+  const theme = useTheme();
   const navigate = useNavigate();
   const [status, setStatus] = useState<Status>({ state: "idle" });
 
@@ -80,19 +82,21 @@ export default function InstagramLogin() {
           placeItems: "center",
           padding: 24,
           textAlign: "center",
+          background: theme.background,
         }}
       >
         <div style={{ maxWidth: 560 }}>
-          <h1 style={{ fontSize: 28, marginBottom: 8, fontWeight: 800 }}>
+          <h1 style={{ fontSize: 28, marginBottom: 8, fontWeight: 800, color: theme.textColor }}>
             Login Issue
           </h1>
-          <p style={{ marginBottom: 16 }}>{status.error}</p>
-          <p style={{ opacity: 0.8 }}>
+          <p style={{ marginBottom: 16, color: theme.textColor }}>{status.error}</p>
+          <p style={{ opacity: 0.8, color: theme.textColor }}>
             Open the Instagram login on mobile again and make sure this page
             receives a URL with
             <code> ?code=&lt;value&gt;</code>.
           </p>
         </div>
+        <div style={{height:100}}></div>
       </div>
     );
   }
