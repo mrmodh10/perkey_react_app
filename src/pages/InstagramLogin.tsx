@@ -40,8 +40,6 @@ export default function InstagramLogin() {
 
       //   if (data.ok) {
       //     setStatus({ state: "done" });
-      //     // You might want to persist tokens/profile here (if returned)
-      //     // localStorage.setItem('ig_access_token', data.access_token ?? '');
       //     // Check if Flutter bridge exists
       //     if ((window as any).flutter_inappwebview?.callHandler) {
       //       (window as any).flutter_inappwebview.callHandler(

@@ -9,31 +9,33 @@ export default function LoadingScreen() {
       style={{
         minHeight: "100vh",
         display: "flex",
-        alignItems: "topCenter",
+        alignItems: "flex-start", // top alignment
         justifyContent: "center",
         background: theme.background,
-        padding: "1rem",
+        paddingTop: "10vh", // relative to screen height
+        paddingLeft: "1rem",
+        paddingRight: "1rem",
       }}
     >
-      <div style={{ height: "100px" , paddingTop: "10rem"}}>
-        <motion.div
+      <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         style={{
-          background:  "rgba(255,255,255,0.1)",
+          background: "rgba(255,255,255,0.1)",
           padding: "2rem 3rem",
           borderRadius: "1rem",
           boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "0.1rem",
-          minWidth: "280px",
+          gap: "0.5rem",
+          minWidth: "60vw",
+          maxWidth: "90vw", // prevent overflowing on small screens
         }}
       >
         {/* Animated Bouncing Dots */}
-        <div style={{ display: "flex", gap: "0.5rem" }}>
+        <div style={{ display: "flex", gap: "0.5rem"}}>
           {[0, 1, 2].map((i) => (
             <motion.div
               key={i}
@@ -41,7 +43,7 @@ export default function LoadingScreen() {
               transition={{
                 repeat: Infinity,
                 duration: 0.6,
-                delay: i * 0.5,
+                delay: i * 0.2,
               }}
               style={{
                 width: "12px",
@@ -54,12 +56,10 @@ export default function LoadingScreen() {
         </div>
 
         {/* Loading Text */}
-        <p style={{color: theme.textColor }}>Authenticating...</p>
-
+        <p style={{ color: theme.textColor, marginTop: "1rem" }}>
+          Authenticating...
+        </p>
       </motion.div>
-      </div>
-
-      <div style={{ height: "100px" }} />
     </div>
   );
 }
