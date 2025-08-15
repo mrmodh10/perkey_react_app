@@ -9,13 +9,14 @@ export default function LoadingScreen() {
       style={{
         minHeight: "100vh",
         display: "flex",
-        alignItems: "center",
+        alignItems: "topCenter",
         justifyContent: "center",
         background: theme.background,
         padding: "1rem",
       }}
     >
-      <motion.div
+      <div style={{ height: "100px" , paddingTop: "10rem"}}>
+        <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
@@ -56,6 +57,9 @@ export default function LoadingScreen() {
         <p style={{color: theme.textColor }}>Authenticating...</p>
 
       </motion.div>
+      </div>
+
+      <div style={{ height: "100px" }} />
     </div>
   );
 }

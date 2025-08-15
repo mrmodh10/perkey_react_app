@@ -24,44 +24,44 @@ export default function InstagramLogin() {
     let cancelled = false;
 
     async function run() {
-      if (!code) {
-        setStatus({
-          state: "error",
-          error: "Missing authorization code in URL.",
-        });
-        return;
-      }
+      // if (!code) {
+      //   setStatus({
+      //     state: "error",
+      //     error: "Missing authorization code in URL.",
+      //   });
+      //   return;
+      // }
       setStatus({ state: "loading" });
 
-      try {
-        const data = await exchangeCodeForSession(code);
+      // try {
+      //   const data = await exchangeCodeForSession(code);
 
-        if (cancelled) return;
+      //   if (cancelled) return;
 
-        if (data.ok) {
-          setStatus({ state: "done" });
-          // You might want to persist tokens/profile here (if returned)
-          // localStorage.setItem('ig_access_token', data.access_token ?? '');
-          // Check if Flutter bridge exists
-          if ((window as any).flutter_inappwebview?.callHandler) {
-            (window as any).flutter_inappwebview.callHandler(
-              "onInstagramData",
-              data
-            );
-          }
-          navigate("/verified", { replace: true });
-        } else {
-          setStatus({
-            state: "error",
-            error: data.message || "Authorization failed.",
-          });
-        }
-      } catch (err: unknown) {
-        const message =
-          (err as Error)?.message ??
-          "Unexpected error while contacting Supabase function.";
-        setStatus({ state: "error", error: message });
-      }
+      //   if (data.ok) {
+      //     setStatus({ state: "done" });
+      //     // You might want to persist tokens/profile here (if returned)
+      //     // localStorage.setItem('ig_access_token', data.access_token ?? '');
+      //     // Check if Flutter bridge exists
+      //     if ((window as any).flutter_inappwebview?.callHandler) {
+      //       (window as any).flutter_inappwebview.callHandler(
+      //         "onInstagramData",
+      //         data
+      //       );
+      //     }
+      //     navigate("/verified", { replace: true });
+      //   } else {
+      //     setStatus({
+      //       state: "error",
+      //       error: data.message || "Authorization failed.",
+      //     });
+      //   }
+      // } catch (err: unknown) {
+      //   const message =
+      //     (err as Error)?.message ??
+      //     "Unexpected error while contacting Supabase function.";
+      //   setStatus({ state: "error", error: message });
+      // }
     }
 
     run();

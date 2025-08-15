@@ -31,13 +31,14 @@ export default function VerifiedScreen() {
       style={{
         minHeight: "100vh",
         display: "flex",
-        alignItems: "center",
+        alignItems: "topCenter",
         justifyContent: "center",
         background: theme.background,
         padding: "1rem",
       }}
     >
-      <motion.div
+      <div style={{ height: "100px" , paddingTop: "5rem"}}>
+        <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -115,6 +116,7 @@ export default function VerifiedScreen() {
           <strong>{countdown}</strong> seconds
         </p>
       </motion.div>
+      </div>
     </div>
   );
 }
