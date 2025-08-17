@@ -2,7 +2,7 @@
   {
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
-      "namespace": "perkey",
+      "namespace": "android_app",
       "package_name": "com.example.perkey",
       "sha256_cert_fingerprints": [
         "9E:39:34:69:38:E5:0C:B2:75:31:66:89:80:45:23:F5:63:9B:E8:3B:7D:55:90:69:81:28:D2:25:0C:70:A4:D0"
