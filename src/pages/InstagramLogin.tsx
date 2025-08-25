@@ -10,24 +10,44 @@ type Status =
   | { state: "error"; error: string }
   | { state: "done" };
 
+// Extract ?code=... robustly without letting '+' turn into spaces
+function extractCodeFromLocation(): string | null {
+  const href = window.location.href;
+
+  // 1) Drop any hash fragments first (e.g., #_, #_=_)
+  const hrefNoHash = href.split("#")[0];
+
+  // 2) Try to read from the querystring
+  const queryMatch = hrefNoHash.match(/[?&]code=([^&]+)/);
+  if (queryMatch && queryMatch[1]) {
+    // decodeURIComponent won't convert '+' to space, which is what we want
+    const decoded = decodeURIComponent(queryMatch[1]);
+    // normalize any accidental whitespace (extremely defensive)
+    return decoded.replace(/\s+/g, "+").trim();
+  }
+
+  // 3) Fallback: some providers place the code in the hash (e.g., #code=...)
+  if (window.location.hash) {
+    // remove leading '#' and optional leading '/'
+    const rawHash = window.location.hash.replace(/^#\/?/, "");
+    // make it look like a querystring for consistent regex
+    const pseudoQuery = rawHash.startsWith("?") ? rawHash : `?${rawHash}`;
+    const hashMatch = pseudoQuery.match(/[?&]code=([^&]+)/);
+    if (hashMatch && hashMatch[1]) {
+      const decoded = decodeURIComponent(hashMatch[1]);
+      return decoded.replace(/\s+/g, "+").trim();
+    }
+  }
+
+  return null;
+}
+
 export default function InstagramLogin() {
   const theme = useTheme();
   const navigate = useNavigate();
   const [status, setStatus] = useState<Status>({ state: "idle" });
 
-  // Extract ?code= either from search or from hash
-  const code = useMemo(() => {
-    let params = new URLSearchParams(window.location.search);
-    let c = params.get("code");
-
-    if (!c && window.location.hash) {
-      // Strip leading # and parse
-      params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
-      c = params.get("code");
-    }
-
-    return c ?? "";
-  }, []);
+  const code = useMemo(() => extractCodeFromLocation() ?? "", []);
 
   useEffect(() => {
     let cancelled = false;
@@ -40,6 +60,7 @@ export default function InstagramLogin() {
         });
         return;
       }
+
       setStatus({ state: "loading" });
 
       try {
@@ -49,18 +70,32 @@ export default function InstagramLogin() {
 
         if (data.ok) {
           setStatus({ state: "done" });
-          // Check if Flutter bridge exists
+
+          // Optional: clean the URL (remove ?code=... and any #_)
+          try {
+            const url = new URL(window.location.href);
+            url.searchParams.delete("code");
+            url.hash = "";
+            window.history.replaceState({}, document.title, url.toString());
+          } catch {
+            // no-op if history replace fails
+          }
+
+          // Flutter bridge (if present)
           if ((window as any).flutter_inappwebview?.callHandler) {
             (window as any).flutter_inappwebview.callHandler(
               "onInstagramData",
               data
             );
           }
+
           navigate("/verified", { replace: true });
         } else {
           setStatus({
             state: "error",
-            error: data.message || "Authorization failed.",
+            error:
+              data.message ||
+              "Authorization failed. (Code exchange returned an error.)",
           });
         }
       } catch (err: unknown) {
