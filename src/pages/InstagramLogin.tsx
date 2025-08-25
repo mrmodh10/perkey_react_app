@@ -15,9 +15,18 @@ export default function InstagramLogin() {
   const navigate = useNavigate();
   const [status, setStatus] = useState<Status>({ state: "idle" });
 
+  // Extract ?code= either from search or from hash
   const code = useMemo(() => {
-    const sp = new URLSearchParams(window.location.search);
-    return sp.get("code") ?? "";
+    let params = new URLSearchParams(window.location.search);
+    let c = params.get("code");
+
+    if (!c && window.location.hash) {
+      // Strip leading # and parse
+      params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      c = params.get("code");
+    }
+
+    return c ?? "";
   }, []);
 
   useEffect(() => {
@@ -84,17 +93,26 @@ export default function InstagramLogin() {
         }}
       >
         <div style={{ maxWidth: 560 }}>
-          <h1 style={{ fontSize: 28, marginBottom: 8, fontWeight: 800, color: theme.textColor }}>
+          <h1
+            style={{
+              fontSize: 28,
+              marginBottom: 8,
+              fontWeight: 800,
+              color: theme.textColor,
+            }}
+          >
             Login Issue
           </h1>
-          <p style={{ marginBottom: 16, color: theme.textColor }}>{status.error}</p>
+          <p style={{ marginBottom: 16, color: theme.textColor }}>
+            {status.error}
+          </p>
           <p style={{ opacity: 0.8, color: theme.textColor }}>
             Open the Instagram login on mobile again and make sure this page
             receives a URL with
             <code> ?code=&lt;value&gt;</code>.
           </p>
         </div>
-        <div style={{height:100}}></div>
+        <div style={{ height: 100 }}></div>
       </div>
     );
   }
