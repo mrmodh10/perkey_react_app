@@ -1,5 +1,3 @@
-import { progress } from "framer-motion";
-
 // lib/supaClient.ts
 export async function exchangeCodeForSession(code: string) {
   const STATIC_ACCESS_TOKEN = import.meta.env.VITE_FUNCTION_ACCESS_TOKEN;

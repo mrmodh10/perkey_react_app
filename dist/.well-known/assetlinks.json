@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.perkey",
+      "sha256_cert_fingerprints": [
+        "9E:39:34:69:38:E5:0C:B2:75:31:66:89:80:45:23:F5:63:9B:E8:3B:7D:55:90:69:81:28:D2:25:0C:70:A4:D0",
+        "F2:81:84:EF:02:BB:D7:EF:47:C4:95:33:A2:AE:B5:C7:FB:8D:98:5E:D1:23:5C:C9:62:E3:28:F7:97:9C:86:DF"
+      ]
+    }
+  }
+]
