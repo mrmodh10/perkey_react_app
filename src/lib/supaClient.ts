@@ -1,9 +1,11 @@
+import { progress } from "framer-motion";
+
 // lib/supaClient.ts
 export async function exchangeCodeForSession(code: string) {
-  const STATIC_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx3c2Npd25zbHdrc3V2cmZ6cGNhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxMDA4NzEsImV4cCI6MjA3MDY3Njg3MX0.nPyhD2_VyQt2YTesO77S-55QBAAcKfdoQLXobuPpozs";
+  const STATIC_ACCESS_TOKEN = import.meta.env.VITE_FUNCTION_ACCESS_TOKEN;
 
   try {
-    const res = await fetch("https://lwsciwnslwksuvrfzpca.supabase.co/functions/v1/instagram-login", {
+    const res = await fetch(import.meta.env.VITE_SUPABASE_FUNCTION_URL as string, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
