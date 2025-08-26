@@ -1,6 +1,6 @@
 // lib/supaClient.ts
 export async function exchangeCodeForSession(code: string) {
-  const STATIC_ACCESS_TOKEN = import.meta.env.VITE_FUNCTION_ACCESS_TOKEN;
+  const STATIC_ACCESS_TOKEN = import.meta.env.VITE_FUNCTION_ACCESS_TOKEN as string;
 
   try {
     const res = await fetch(import.meta.env.VITE_SUPABASE_FUNCTION_URL as string, {
