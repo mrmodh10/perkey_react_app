@@ -1,11 +1,9 @@
 // lib/supaClient.ts
 export async function exchangeCodeForSession(code: string) {
-  const STATIC_ACCESS_TOKEN = import.meta.env.VITE_FUNCTION_ACCESS_TOKEN as string;
-  console.log("Static access token:", STATIC_ACCESS_TOKEN);
+  const STATIC_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im51eWlzaGpzYnJ0ZW9scGZhb3ZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUyOTIxNDMsImV4cCI6MjA3MDg2ODE0M30.fK8ebypylZppEt9GfPP6daNJ40E-jyTqV9CiFDuJkyw";
 
   try {
-    console.log("function Name:", import.meta.env.VITE_SUPABASE_FUNCTION_URL as string);
-    const res = await fetch(import.meta.env.VITE_SUPABASE_FUNCTION_URL as string, {
+    const res = await fetch("https://nuyishjsbrteolpfaovi.supabase.co/functions/v1/instagram-login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
