@@ -16,9 +16,10 @@ export default function InstagramLogin() {
   const [status, setStatus] = useState<Status>({ state: "idle" });
 
   const code = useMemo(() => {
-    const sp = new URLSearchParams(window.location.search);
-    return sp.get("code") ?? "";
-  }, []);
+  const sp = new URLSearchParams(window.location.search);
+  const raw = sp.get("code") ?? "";
+  return raw.replace(/#_$/, ""); // remove trailing #_ if present
+}, []);
 
   useEffect(() => {
     let cancelled = false;
