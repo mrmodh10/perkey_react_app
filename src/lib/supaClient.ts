@@ -1,8 +1,10 @@
 // lib/supaClient.ts
 export async function exchangeCodeForSession(code: string) {
   const STATIC_ACCESS_TOKEN = import.meta.env.VITE_FUNCTION_ACCESS_TOKEN as string;
+  console.log("Static access token:", STATIC_ACCESS_TOKEN);
 
   try {
+    console.log("function Name:", import.meta.env.VITE_SUPABASE_FUNCTION_URL as string);
     const res = await fetch(import.meta.env.VITE_SUPABASE_FUNCTION_URL as string, {
       method: "POST",
       headers: {
@@ -11,6 +13,8 @@ export async function exchangeCodeForSession(code: string) {
       },
       body: JSON.stringify({ code }),
     });
+
+    console.log("Response status:", res.status);
 
     if (!res.ok) {
       const errorData = await res.json();

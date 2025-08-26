@@ -35,6 +35,7 @@ export default function InstagramLogin() {
       setStatus({ state: "loading" });
 
       try {
+        console.log("Exchanging code for session...", code);
         const data = await exchangeCodeForSession(code);
 
         if (cancelled) return;
