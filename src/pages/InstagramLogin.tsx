@@ -51,6 +51,7 @@ export default function InstagramLogin() {
         const deeplinkUrl =
           `https://amazing-griffin-5d41ac.netlify.app/deeplink` +
           `?success=true` +
+          `&authType=instagram` +
           `&session_id=${encodeURIComponent(data.session_id)}`;
 
         window.location.replace(deeplinkUrl);
