@@ -11,14 +11,15 @@ type Status =
   | { state: "error"; error: string };
 
 /* ---------------------------------------------
-   Styled Components (Mobile-first)
+   Styled Components
 --------------------------------------------- */
 const Page = styled.div`
   min-height: 100vh;
   background: #1877f2;
   display: flex;
   justify-content: center;
-  padding-top: 64px; /* push card down on mobile */
+  align-items: flex-start;
+  padding-top: 64px;
   padding-left: 16px;
   padding-right: 16px;
 `;
@@ -27,10 +28,29 @@ const Card = styled.div`
   background: #ffffff;
   width: 100%;
   max-width: 420px;
+
+  /* 🔑 Prevent full-height stretching */
+  height: auto;
+  align-self: flex-start;
+
   padding: 32px 24px 36px;
   border-radius: 16px;
   text-align: center;
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.15);
+
+  /* Optional subtle entrance animation */
+  animation: fadeIn 0.25s ease-out;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 `;
 
 const LogoWrapper = styled.div`
@@ -125,6 +145,9 @@ export default function FacebookLogin() {
           return;
         }
 
+        /* -----------------------------------------
+           🔥 Redirect to Flutter Deep Link
+        ----------------------------------------- */
         const deeplinkUrl =
           `https://amazing-griffin-5d41ac.netlify.app/deeplink` +
           `?success=true` +
