@@ -11,37 +11,45 @@ type Status =
   | { state: "error"; error: string };
 
 /* ---------------------------------------------
-   Styled Components (Facebook Theme)
+   Styled Components (Mobile-first)
 --------------------------------------------- */
-const Container = styled.div`
+const Page = styled.div`
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  background: #f0f2f5;
-  padding: 24px;
+  background: #1877f2;
+  display: flex;
+  justify-content: center;
+  padding-top: 64px; /* push card down on mobile */
+  padding-left: 16px;
+  padding-right: 16px;
 `;
 
 const Card = styled.div`
   background: #ffffff;
-  padding: 32px 28px;
-  border-radius: 14px;
   width: 100%;
   max-width: 420px;
+  padding: 32px 24px 36px;
+  border-radius: 16px;
   text-align: center;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.15);
+`;
+
+const LogoWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
 `;
 
 const Logo = styled.div`
   width: 56px;
   height: 56px;
-  margin: 0 auto 16px;
   border-radius: 50%;
   background: #1877f2;
-  display: grid;
-  place-items: center;
   color: #ffffff;
   font-size: 30px;
   font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Title = styled.h1`
@@ -107,7 +115,6 @@ export default function FacebookLogin() {
 
       try {
         const data = await exchangeCodeForSession(code);
-
         if (cancelled) return;
 
         if (!data.ok) {
@@ -118,9 +125,6 @@ export default function FacebookLogin() {
           return;
         }
 
-        /* -----------------------------------------
-           🔥 Redirect to Flutter Deep Link
-        ----------------------------------------- */
         const deeplinkUrl =
           `https://amazing-griffin-5d41ac.netlify.app/deeplink` +
           `?success=true` +
@@ -144,34 +148,28 @@ export default function FacebookLogin() {
     };
   }, [code]);
 
-  /* ---------------------------------------------
-     Loading & Idle State
-  --------------------------------------------- */
-  if (status.state === "idle" || status.state === "loading") {
-    return (
-      <Container>
-        <Card>
-          <Logo>f</Logo>
-          <Title>Connecting to Facebook</Title>
-          <Subtitle>
-            Verifying your account and linked Instagram profile
-          </Subtitle>
-          <Loader />
-        </Card>
-      </Container>
-    );
-  }
-
-  /* ---------------------------------------------
-     Error State
-  --------------------------------------------- */
   return (
-    <Container>
+    <Page>
       <Card>
-        <Logo>!</Logo>
-        <Title>Login Failed</Title>
-        <ErrorText>{status.error}</ErrorText>
+        <LogoWrapper>
+          <Logo>f</Logo>
+        </LogoWrapper>
+
+        {status.state === "error" ? (
+          <>
+            <Title>Login Failed</Title>
+            <ErrorText>{status.error}</ErrorText>
+          </>
+        ) : (
+          <>
+            <Title>Connecting to Facebook</Title>
+            <Subtitle>
+              Verifying your account and linked Instagram profile
+            </Subtitle>
+            <Loader />
+          </>
+        )}
       </Card>
-    </Container>
+    </Page>
   );
 }
