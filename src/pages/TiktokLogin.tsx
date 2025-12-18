@@ -16,16 +16,13 @@ type Status =
 
 const Page = styled.div`
   min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    #000000 0%,
-    #0b0b0b 55%,
-    #111111 100%
-  );
+  background: linear-gradient(135deg, #000000, #111111);
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 24px;
+  align-items: flex-start; /* 👈 FIX */
+  padding-top: 64px;       /* 👈 Center-top positioning */
+  padding-left: 16px;
+  padding-right: 16px;
 `;
 
 const Card = styled.div`
@@ -39,19 +36,6 @@ const Card = styled.div`
   box-shadow:
     0 24px 70px rgba(0, 0, 0, 0.45),
     0 0 0 1px rgba(0, 0, 0, 0.05);
-
-  animation: slideIn 0.3s ease-out;
-
-  @keyframes slideIn {
-    from {
-      opacity: 0;
-      transform: translateY(16px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
 `;
 
 const LogoWrapper = styled.div`
@@ -60,10 +44,34 @@ const LogoWrapper = styled.div`
   margin-bottom: 22px;
 `;
 
-const TikTokLogo = styled.img`
-  width: 64px;
-  height: 64px;
-`;
+/* ✅ Inline SVG — NO CORS, NO broken icon */
+const TikTokLogo = () => (
+  <svg
+    width="56"
+    height="56"
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="48" height="48" rx="10" fill="#000000" />
+    <path
+      d="M30.5 14.2c1.6 1.2 3.4 1.8 5.2 1.8v4.6c-2 0-4-.5-5.8-1.5v8.7
+         c0 5-4 9-9 9s-9-4-9-9 4-9 9-9c.4 0 .9 0 1.3.1v4.8
+         c-.4-.1-.8-.2-1.3-.2-2.3 0-4.2 1.9-4.2 4.2
+         0 2.3 1.9 4.2 4.2 4.2s4.2-1.9 4.2-4.2V10h5.4
+         c.3 1.6 1.2 3 2.4 4.2z"
+      fill="#25F4EE"
+    />
+    <path
+      d="M28.5 12.2c1.6 1.2 3.4 1.8 5.2 1.8v4.6
+         c-2 0-4-.5-5.8-1.5v8.7
+         c0 5-4 9-9 9-2 0-3.9-.7-5.4-1.9
+         1.6 1.6 3.7 2.5 6 2.5
+         5 0 9-4 9-9V12.2z"
+      fill="#FE2C55"
+    />
+  </svg>
+);
 
 const Title = styled.h1`
   font-size: 22px;
@@ -75,7 +83,7 @@ const Title = styled.h1`
 const Subtitle = styled.p`
   font-size: 14px;
   color: #666666;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
   line-height: 1.45;
 `;
 
@@ -83,7 +91,6 @@ const Loader = styled.div`
   width: 38px;
   height: 38px;
   margin: 0 auto;
-
   border: 4px solid #e5e5e5;
   border-top-color: #25f4ee;
   border-radius: 50%;
@@ -114,22 +121,18 @@ export default function TikTokLogin() {
   }, []);
 
   useEffect(() => {
-    let cancelled = false;
+    if (!code) {
+      setStatus({
+        state: "error",
+        error: "Missing authorization code from TikTok.",
+      });
+      return;
+    }
 
     async function run() {
-      if (!code) {
-        setStatus({
-          state: "error",
-          error: "Missing authorization code from TikTok.",
-        });
-        return;
-      }
-
       setStatus({ state: "loading" });
-
       try {
         const data = await exchangeCodeForSession(code);
-        if (cancelled) return;
 
         if (!data.ok) {
           setStatus({
@@ -146,30 +149,22 @@ export default function TikTokLogin() {
           `&session_id=${encodeURIComponent(data.session_id)}`;
 
         window.location.replace(deeplinkUrl);
-      } catch (err: unknown) {
+      } catch (err) {
         setStatus({
           state: "error",
-          error:
-            (err as Error)?.message ??
-            "Unexpected error during TikTok login.",
+          error: "Unexpected error during TikTok login.",
         });
       }
     }
 
     run();
-    return () => {
-      cancelled = true;
-    };
   }, [code]);
 
   return (
     <Page>
       <Card>
         <LogoWrapper>
-          <TikTokLogo
-            src="https://upload.wikimedia.org/wikipedia/commons/0/08/TikTok_logo.svg"
-            alt="TikTok"
-          />
+          <TikTokLogo />
         </LogoWrapper>
 
         {status.state === "error" ? (
@@ -181,8 +176,7 @@ export default function TikTokLogin() {
           <>
             <Title>Connecting to TikTok</Title>
             <Subtitle>
-              Verifying your TikTok account and securely linking it to your
-              profile
+              Verifying your TikTok account and securely linking it
             </Subtitle>
             <Loader />
           </>
