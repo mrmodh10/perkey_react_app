@@ -5,6 +5,7 @@ import HomeScreen from "./pages/HomeScreen";
 import { ThemeProvider } from './context/ThemeContext';
 import { GlobalStyle } from "./styles/GlobalStyle";
 import FacebookLogin from "./pages/FacebookLogin";
+import TikTokLogin from "./pages/TiktokLogin";
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/" element={<HomeScreen />} />
         <Route path="/instagramLogin" element={<InstagramLogin />} />
         <Route path="/facebookLogin" element={<FacebookLogin />} />
+        <Route path="/tiktokLogin" element={<TikTokLogin />} />
         <Route path="/verified" element={<VerifiedScreen />} />
       </Routes>
     </ThemeProvider>
