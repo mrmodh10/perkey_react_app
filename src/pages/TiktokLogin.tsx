@@ -13,35 +13,39 @@ type Status =
 /* ---------------------------------------------
    Styled Components
 --------------------------------------------- */
+
 const Page = styled.div`
   min-height: 100vh;
-  background: #000000; /* TikTok black */
+  background: linear-gradient(
+    135deg,
+    #000000 0%,
+    #0b0b0b 55%,
+    #111111 100%
+  );
   display: flex;
+  align-items: center;
   justify-content: center;
-  align-items: flex-start;
-  padding-top: 64px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 24px;
 `;
 
 const Card = styled.div`
   background: #ffffff;
   width: 100%;
   max-width: 420px;
-  height: auto;
-  align-self: flex-start;
-
-  padding: 32px 24px 36px;
-  border-radius: 16px;
+  padding: 40px 28px;
+  border-radius: 22px;
   text-align: center;
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
 
-  animation: fadeIn 0.25s ease-out;
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
 
-  @keyframes fadeIn {
+  animation: slideIn 0.3s ease-out;
+
+  @keyframes slideIn {
     from {
       opacity: 0;
-      transform: translateY(-8px);
+      transform: translateY(16px);
     }
     to {
       opacity: 1;
@@ -53,41 +57,35 @@ const Card = styled.div`
 const LogoWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 22px;
 `;
 
-const Logo = styled.div`
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
-  background: #000000;
-  color: #ffffff;
-  font-size: 26px;
-  font-weight: 900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const TikTokLogo = styled.img`
+  width: 64px;
+  height: 64px;
 `;
 
 const Title = styled.h1`
   font-size: 22px;
   font-weight: 800;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   color: #111111;
 `;
 
 const Subtitle = styled.p`
   font-size: 14px;
-  color: #6b6b6b;
-  margin-bottom: 24px;
+  color: #666666;
+  margin-bottom: 30px;
+  line-height: 1.45;
 `;
 
 const Loader = styled.div`
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   margin: 0 auto;
+
   border: 4px solid #e5e5e5;
-  border-top-color: #000000;
+  border-top-color: #25f4ee;
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
 
@@ -141,13 +139,10 @@ export default function TikTokLogin() {
           return;
         }
 
-        /* -----------------------------------------
-           🔥 Redirect to Flutter Deep Link
-        ----------------------------------------- */
         const deeplinkUrl =
           `https://amazing-griffin-5d41ac.netlify.app/deeplink` +
           `?success=true` +
-          `&authType=tiktok` +
+          `&authType=ed163bb5-2756-4873-8ef1-69146799f2c6` +
           `&session_id=${encodeURIComponent(data.session_id)}`;
 
         window.location.replace(deeplinkUrl);
@@ -171,7 +166,10 @@ export default function TikTokLogin() {
     <Page>
       <Card>
         <LogoWrapper>
-          <Logo>🎵</Logo>
+          <TikTokLogo
+            src="https://upload.wikimedia.org/wikipedia/commons/0/08/TikTok_logo.svg"
+            alt="TikTok"
+          />
         </LogoWrapper>
 
         {status.state === "error" ? (
@@ -183,7 +181,8 @@ export default function TikTokLogin() {
           <>
             <Title>Connecting to TikTok</Title>
             <Subtitle>
-              Verifying your TikTok account and profile information
+              Verifying your TikTok account and securely linking it to your
+              profile
             </Subtitle>
             <Loader />
           </>
