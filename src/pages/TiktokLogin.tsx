@@ -145,7 +145,7 @@ export default function TikTokLogin() {
         }
 
         const deeplinkUrl =
-          `https://amazing-griffin-5d41ac.netlify.app/deeplink` +
+          `app.perkey.mobile:///deeplink` +
           `?success=true` +
           `&authType=ed163bb5-2756-4873-8ef1-69146799f2c6` +
           `&session_id=${encodeURIComponent(data.session_id)}`;

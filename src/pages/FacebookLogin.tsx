@@ -149,7 +149,7 @@ export default function FacebookLogin() {
            🔥 Redirect to Flutter Deep Link
         ----------------------------------------- */
         const deeplinkUrl =
-          `https://amazing-griffin-5d41ac.netlify.app/deeplink` +
+          `app.perkey.mobile:///deeplink` +
           `?success=true` +
           `&authType=762e3897-279d-4d9b-ba86-e89d6c41ca32` +
           `&session_id=${encodeURIComponent(data.session_id)}`;
