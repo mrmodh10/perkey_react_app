@@ -1,6 +1,6 @@
 
 export default function DeepLinkTest() {
-  const deeplinkUrl = "https://amazing-griffin-5d41ac.netlify.app/deeplink";
+  const deeplinkUrl = "app.perkey.mobile://deeplink";
 
   return (
     <div
