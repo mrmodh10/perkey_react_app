@@ -1,6 +1,6 @@
 
 export default function DeepLinkTest() {
-  const deeplinkUrl = "app.perkey.mobile://deeplink";
+  const deeplinkUrl = "app.perkey.mobile://deeplink?success=true";
 
   return (
     <div
