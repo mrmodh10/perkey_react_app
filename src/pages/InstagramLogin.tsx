@@ -49,7 +49,7 @@ export default function InstagramLogin() {
          * Redirect to Flutter deep link
          */
         const deeplinkUrl =
-          `https://amazing-griffin-5d41ac.netlify.app/deeplink` +
+          `app.perkey.mobile:///deeplink` +
           `?success=true` +
           `&authType=322351c1-4451-40c3-8ada-af8dfa702dff` +
           `&session_id=${encodeURIComponent(data.session_id)}`;
