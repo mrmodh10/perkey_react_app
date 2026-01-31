@@ -13,10 +13,7 @@ export default function DeepLinkReturnScreen() {
     }
 
     const deeplinkUrl =
-      `https://amazing-griffin-5d41ac.netlify.app/deeplink` +
-      `?success=true` +
-      `&authType=322351c1-4451-40c3-8ada-af8dfa702dff` +
-      `&session_id=${encodeURIComponent(sessionId)}`;
+      "https://amazing-griffin-5d41ac.netlify.app/deeplink";
 
     // ✅ Best for iOS universal links
     window.location.href = deeplinkUrl;
