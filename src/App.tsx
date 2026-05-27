@@ -6,7 +6,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { GlobalStyle } from "./styles/GlobalStyle";
 import FacebookLogin from "./pages/FacebookLogin";
 import TikTokLogin from "./pages/TiktokLogin";
-import DeepLinkTest from "./pages/DeepLinkReturnScreen";
+import Deeplink from "./pages/Deeplink";
 
 export default function App() {
   return (
@@ -20,7 +20,7 @@ export default function App() {
         <Route path="/verified" element={<VerifiedScreen />} />
 
         {/* ✅ Deep link test route */}
-    <Route path="/deeplink-test" element={<DeepLinkTest />} />
+        <Route path="/deeplink-test" element={<Deeplink />} />
       </Routes>
     </ThemeProvider>
   );

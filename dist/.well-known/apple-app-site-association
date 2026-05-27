@@ -1,25 +1,18 @@
 {
   "applinks": {
-    "apps": [],
     "details": [
       {
-        "appIDs": [
-          "CCT646BTUN.app.perkey.mobile"
-        ],
+        "appID": "2UWQ7SU2S9.app.perkey.mobile",
         "paths": [
-          "*"
-        ],
-        "components": [
-          {
-            "/": "/*"
-          }
+          "/deeplink",
+          "/deeplink/*"
         ]
       }
     ]
   },
   "webcredentials": {
     "apps": [
-      "CCT646BTUN.app.perkey.mobile"
+      "2UWQ7SU2S9.app.perkey.mobile"
     ]
   }
 }
