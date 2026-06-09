@@ -135,6 +135,7 @@ export default function FacebookLogin() {
 
       try {
         const data = await exchangeCodeForSession(code);
+        console.log("Facebook auth response:", JSON.stringify(data));
         if (cancelled) return;
 
         if (!data.ok) {
